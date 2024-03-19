@@ -9,7 +9,7 @@ setup(
     name='python-lorem-ipsum',
     version='1.0.0',
     url='https://github.com/oVitorio/python-lorem-ipsum',
-    license='GNUv3',
+    license='MIT',
     author='Vitório Augusto Cavalheiro',
     description='A Python library for generating Lorem Ipsum text.',
     long_description=README,
