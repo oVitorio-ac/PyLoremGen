@@ -91,7 +91,7 @@ class LoremIpsum:
             None
         """
         if self.paragraphs_words is None:
-            self.paragraphs_words = random.randint(50, 100)
+            self.paragraphs_words = random.randint(12, 20)
 
     def __generate_paragraph(self):
         """
@@ -111,14 +111,15 @@ class LoremIpsum:
         except Exception as e:
             raise LoremIpsumError(f"Error generating paragraph: {str(e)}") from e
 
-    def paragraphs(self, paragraphs_numbers: int, start_with_lorem_ipsum: bool = True) -> str:
+    def paragraphs(self, paragraphs_numbers: int, size: str = "medium", start_with_lorem_ipsum: bool = True) -> str:
         """
-        Generate a specified number of lorem ipsum paragraphs.
+        Generate a specified number of lorem ipsum paragraphs with specified size.
 
         Parameters:
             paragraphs_numbers (int): The number of paragraphs to generate.
+            size (str, optional): The size of the paragraphs. Can be "small", "medium", or "large". Defaults to "medium".
             start_with_lorem_ipsum (bool, optional): 
-            Whether to start with a "Lorem ipsum" paragraph. Defaults to True.
+            Whether to start with a "Lorem ipsum" paragraph. Defaults to False.
 
         Returns:
             str: The generated paragraphs joined by newline characters.
@@ -127,17 +128,21 @@ class LoremIpsum:
             LoremIpsumError: If an error occurs during the generation of paragraphs.
         """
         try:
+            paragraph_size = {"small": 3, "medium": 5, "large": 9}.get(size.lower(), 5)
+            paragraphs = []
+
             if start_with_lorem_ipsum:
-                self.paragraph_lorem.append(self.start_with_lorem_ipsum)
+                paragraphs.append(self.start_with_lorem_ipsum)
 
-            for _ in range(paragraphs_numbers - start_with_lorem_ipsum):
-                self.paragraph_lorem.append(self.__generate_paragraph())
+            for _ in range(paragraphs_numbers):
+                paragraph = [self.__generate_paragraph() for _ in range(paragraph_size)]
+                paragraphs.append("\n".join(paragraph))
 
-            self.paragraph_lorem.append("\n \n")
-
-            return "\n".join(self.paragraph_lorem)
+            return "\n".join(paragraphs)
         except Exception as e:
             raise LoremIpsumError(f"Error generating paragraphs: {str(e)}") from e
+
+
 
     def words(self, words_numbers: int) -> str:
         """
