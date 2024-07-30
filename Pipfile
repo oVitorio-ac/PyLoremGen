@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+reportlab = "==4.2.*"
+pyjwt = "2.8.*"
+pillow = "*"
+
+[dev-packages]
+black = "==24.4.*"
+isort = "*"
+flake8 = "*"
+flake8-annotations = "*"
+
+[requires]
+python_version = "3.9"
