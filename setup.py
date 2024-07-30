@@ -7,7 +7,7 @@ README = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="python-lorem-ipsum",
-    version="1.1.0",
+    version="2.0.0",
     url="https://github.com/oVitorio/python-lorem-ipsum",
     license="MIT",
     author="Vitório Augusto Cavalheiro",
