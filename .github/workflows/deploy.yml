@@ -1,0 +1,98 @@
+name: Python CI/CD
+
+on:
+  pull_request:
+    branches:
+      - test
+      - prod
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Run Tests
+        run: |
+          echo "Running tests..."
+          python -m unittest discover tests
+
+        continue-on-error: true
+
+  pylint:
+    needs: tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Run Pylint
+        run: |
+          echo "Running pylint..."
+          pylint pylorem
+        continue-on-error: true
+
+  build_and_publish:
+    needs: pylint
+    if: |
+      github.event_name == 'push' &&
+      (github.ref == 'refs/heads/test' || github.ref == 'refs/heads/prod')
+      
+    runs-on: ubuntu-latest
+      
+    steps:
+      - name: Debugging Info
+        run: |
+          echo "Event Name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Head Ref: ${{ github.head_ref }}"
+      
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      
+      - name: Build and Publish
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            if [ "${{ github.ref }}" == "refs/heads/test" ] || [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+              echo "Building and publishing..."
+              if [ "${{ github.head_ref }}" == "dev" ]; then
+                echo "Deploying to test PyPI..."
+                python setup.py sdist bdist_wheel
+                pip install twine
+                TWINE_USERNAME=__token__ TWINE_PASSWORD=$PYPI_TEST_TOKEN twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+              elif [ "${{ github.head_ref }}" == "prod" ]; then
+                echo "Deploying to official PyPI..."
+                python setup.py sdist bdist_wheel
+                pip install twine
+                TWINE_USERNAME=__token__ TWINE_PASSWORD=$PYPI_PROD_TOKEN twine upload dist/*
+              else
+                echo "Unsupported branch: ${{ github.head_ref }}"
+                exit 1
+              fi
+            else
+              echo "Skipping build_and_publish job. Ref does not match 'test' or 'prod'."
+            fi
+          else
+            echo "Skipping build_and_publish job. Event is not a push."
+          fi
+        env:
+          PYPI_TEST_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
+          PYPI_PROD_TOKEN: ${{ secrets.PYPI_PROD_TOKEN }}
