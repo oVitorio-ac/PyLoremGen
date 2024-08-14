@@ -1,0 +1,113 @@
+name: Python CI/CD - Prod
+
+on:
+  pull_request:
+    branches:
+      - prod
+  release:
+    types: [created]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Pipenv
+        run: pip install pipenv
+
+      - name: Install Dependencies
+        run: pipenv install --dev
+
+      - name: Run Black
+        run: pipenv run black --check .
+
+      - name: Run Isort
+        run: pipenv run isort --check-only .
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Pipenv
+        run: pip install pipenv
+
+      - name: Install Dependencies
+        run: pipenv install --dev
+
+      - name: Run Tests
+        run: pipenv run python -m unittest discover tests
+
+  detect_secrets:
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Dependencies
+        run: pip install detect-secrets
+
+      - name: Run Detect Secrets
+        run: detect-secrets scan .
+
+
+  publish_to_pypi:
+    name: Publish Python 🐍 distribution 📦 to PyPI
+    needs: [detect_secrets, test]
+    if: github.event_name == 'release' && github.ref == 'refs/heads/prod'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade setuptools wheel
+          python -m pip install --upgrade twine
+
+      - name: Build package
+        run: |
+          python setup.py sdist bdist_wheel
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          twine upload --repository-url https://upload.pypi.org/legacy/ --verbose dist/*
