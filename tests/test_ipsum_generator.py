@@ -1,5 +1,7 @@
 import unittest
+
 from pylorem.generator.lorem_ipsum import LoremIpsum
+
 
 class TestLoremIpsum(unittest.TestCase):
 
@@ -54,7 +56,7 @@ class TestLoremIpsum(unittest.TestCase):
 
         Parameters:
             self (TestClass): The current instance of the test class.
-        
+
         Returns:
             None
         """
@@ -77,7 +79,7 @@ class TestLoremIpsum(unittest.TestCase):
 
         Parameters:
             self (object): The current instance of the `TestCase` class.
-        
+
         Returns:
             None
         """
@@ -159,7 +161,7 @@ class TestLoremIpsum(unittest.TestCase):
         :return: The generated Lorem Ipsum paragraph.
         :rtype: str
         """
-        
+
         # Arrange
         lorem = LoremIpsum()
 

@@ -1,5 +1,6 @@
-from setuptools import setup, find_packages
 import pathlib
+
+from setuptools import find_packages, setup
 
 here = pathlib.Path(__file__).parent.resolve()
 
@@ -7,7 +8,7 @@ README = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="python-lorem-ipsum",
-    version="2.0.0",
+    version="2.0.1",
     url="https://github.com/oVitorio/python-lorem-ipsum",
     license="MIT",
     author="Vitório Augusto Cavalheiro",
