@@ -7,9 +7,9 @@ here = pathlib.Path(__file__).parent.resolve()
 README = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
-    name="python-lorem-ipsum",
-    version="2.0.1",
-    url="https://github.com/oVitorio/python-lorem-ipsum",
+    name="PyLoremGen",
+    version="1.0.2",
+    url="https://github.com/oVitorio-ac/PyLoremGen/",
     license="MIT",
     author="Vitório Augusto Cavalheiro",
     description="A Python library for generating Lorem Ipsum text.",
