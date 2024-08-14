@@ -1,13 +1,18 @@
-"""use de random library for create lorem ipsum""" 
+"""use de random library for create lorem ipsum"""
+
 import random
+
 from pylorem.utils.helper import get_data_json
+
 
 class LoremIpsumError(Exception):
     """
     Custom exception class for LoremIpsum errors.
     """
+
     def __init__(self, message):
         super().__init__(message)
+
 
 class LoremIpsum:
     """
@@ -111,14 +116,16 @@ class LoremIpsum:
         except Exception as e:
             raise LoremIpsumError(f"Error generating paragraph: {str(e)}") from e
 
-    def paragraphs(self, paragraphs_numbers: int, size: str = "medium", start_with_lorem_ipsum: bool = True) -> str:
+    def paragraphs(
+        self, paragraphs_numbers: int, size: str = "medium", start_with_lorem_ipsum: bool = True
+    ) -> str:
         """
         Generate a specified number of lorem ipsum paragraphs with specified size.
 
         Parameters:
             paragraphs_numbers (int): The number of paragraphs to generate.
             size (str, optional): The size of the paragraphs. Can be "small", "medium", or "large". Defaults to "medium".
-            start_with_lorem_ipsum (bool, optional): 
+            start_with_lorem_ipsum (bool, optional):
             Whether to start with a "Lorem ipsum" paragraph. Defaults to False.
 
         Returns:
@@ -141,8 +148,6 @@ class LoremIpsum:
             return "\n".join(paragraphs)
         except Exception as e:
             raise LoremIpsumError(f"Error generating paragraphs: {str(e)}") from e
-
-
 
     def words(self, words_numbers: int) -> str:
         """
