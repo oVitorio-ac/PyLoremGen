@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 
 BASEPATH = Path(os.path.dirname(__file__)).parents[0]
-_path_file = os.path.join(BASEPATH, 'data/lorem_ipsum_words.json')
+_path_file = os.path.join(BASEPATH, 'data/lorem_ipsum_wordlist.json')
 
 
 def get_data_json(selection: str = 'lorem_words'):

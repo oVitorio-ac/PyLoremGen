@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "36c7e71b1c928cc7ab9b846e3304460b365997937ceb14f91db2670637b79e23"
+            "sha256": "9009a344d313cf4b68acc67ecd2e5013b6544aa6bd2a1bda7e03595e4523abd3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -107,18 +107,8 @@
                 "sha256:ff25afb18123cea58a591ea0244b92eb1e61a1fd497bf6d6384f09bc3262ec3e",
                 "sha256:ff337c552345e95702c5fde3158acb0625111017d0e5f24bf3acdb9cc16b90d1"
             ],
-            "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==10.4.0"
-        },
-        "pyjwt": {
-            "hashes": [
-                "sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de",
-                "sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.7'",
-            "version": "==2.8.0"
         },
         "reportlab": {
             "hashes": [
