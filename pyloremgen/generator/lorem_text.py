@@ -77,6 +77,7 @@ class LoremIpsum:
         self.items_lorem = []
         self.paragraphs_words = None
         self.start_with_lorem_ipsum = " ".join(get_data_json("lorem_ipsum_start"))
+        self.start_with_lorem_ipsum = " ".join(get_data_json("lorem_ipsum_start"))
         self.__initialize_paragraphs_words()
 
     def __initialize_paragraphs_words(self):
@@ -126,6 +127,7 @@ class LoremIpsum:
         Parameters:
             paragraphs_numbers (int): The number of paragraphs to generate.
             size (str, optional): The size of the paragraphs. Can be "small", "medium", or "large". Defaults to "medium".
+            start_with_lorem_ipsum (bool, optional):
             start_with_lorem_ipsum (bool, optional):
             Whether to start with a "Lorem ipsum" paragraph. Defaults to False.
 
