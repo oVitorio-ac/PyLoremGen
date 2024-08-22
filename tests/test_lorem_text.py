@@ -1,6 +1,6 @@
 import unittest
 
-from pylorem.generator.lorem_ipsum import LoremIpsum
+from pyloremgen.generator.lorem_text import LoremIpsum
 
 
 class TestLoremIpsum(unittest.TestCase):

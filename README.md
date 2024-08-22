@@ -11,7 +11,7 @@
 
 ## 💻 About the project
 
-The Lorem Ipsum Generator is a Python library that allows you to generate Lorem Ipsum text easily. Lorem Ipsum is placeholder text commonly used in the printing and typesetting industry.
+The `pyloremgen` library is a Python package designed to easily generate Lorem Ipsum text and create PDFs with Lorem Ipsum content. Lorem Ipsum is placeholder text commonly used in the printing and typesetting industry.
 
 ## ⚙️ Features
 
@@ -20,6 +20,8 @@ The Lorem Ipsum Generator is a Python library that allows you to generate Lorem 
 - **Random Words Generation:** Create a string of random words using the `words` method, allowing customization of the number of words.
 
 - **Shopping List Generation:** Quickly generate a shopping list with randomly selected items using the `shopping_list` method.
+
+- **PDF Generation:** Create PDF documents with Lorem Ipsum content using the `PDFGenerator` class. You can specify the number of pages and choose whether to include a cover page.
 
 ---
 
@@ -31,54 +33,76 @@ The Lorem Ipsum Generator is a Python library that allows you to generate Lorem 
 
 ### Installation
 
-To use the Lorem Ipsum Generator, you first need to install it. You can install it using pip:
+To use the `pyloremgen` library, you first need to install it. You can install it using pip:
 
 ```bash
-pip install lorem-ipsum-generator
+pip install pyloremgen
 ```
 
 ### Usage
 
+#### Using `LoremIpsum` for Text Generation
+
 Import the `LoremIpsum` class and create an instance:
 
 ```python
-from lorem_ipsum_generator import LoremIpsum
+from pyloremgen.generator.lorem_text import LoremIpsum
 
-Lorem = LoremIpsum()
+lorem_generator = LoremIpsum()
 ```
 
-#### Generating Paragraphs
+##### Generating Paragraphs
 
 To generate Lorem Ipsum paragraphs, use the `paragraphs` method:
 
 ```python
-lorem_paragraphs = Lorem.paragraphs(paragraphs_numbers=3, start_with_lorem_ipsum=True)
+lorem_paragraphs = lorem_generator.paragraphs(paragraphs_numbers=3, size="medium", start_with_lorem_ipsum=True)
 print(lorem_paragraphs)
 ```
 
 This will generate three Lorem Ipsum paragraphs, starting with the default "Lorem ipsum" text.
 
-#### Generating Words
+##### Generating Words
 
 To generate a string of random words, use the `words` method:
 
 ```python
-lorem_words = Lorem.words(words_numbers=50)
+lorem_words = lorem_generator.words(words_numbers=50)
 print(lorem_words)
 ```
 
 This will generate a string containing 50 random words.
 
-#### Generating a Shopping List
+##### Generating a Shopping List
 
 To generate a shopping list of randomly selected items, use the `shopping_list` method:
 
 ```python
-shopping_list = Lorem.shopping_list(items_count=5)
+shopping_list = lorem_generator.shopping_list(items_count=5)
 print(shopping_list)
 ```
 
 This will generate a shopping list with 5 randomly selected items.
+
+#### Using `PDFGenerator` for PDF Generation
+
+Import the `PDFGenerator` class and create an instance:
+
+```python
+from pyloremgen.generator.lorem_pdf import PDFGenerator
+
+pdf_generator = PDFGenerator()
+```
+
+##### Generating a PDF
+
+To generate a PDF document, use the `generate_pdf` method:
+
+```python
+pdf_generator.generate_pdf(filename="example.pdf", num_pages=5, cover_page_count=True)
+```
+
+This will create a PDF named `example.pdf` with 5 pages, including a cover page.
 
 ### Examples
 
@@ -86,13 +110,16 @@ Here are some additional examples:
 
 ```python
 # Example 1: Generating 2 paragraphs without starting with "Lorem ipsum"
-lorem_text = Lorem.paragraphs(paragraphs_numbers=2, start_with_lorem_ipsum=False)
+lorem_text = lorem_generator.paragraphs(paragraphs_numbers=2, start_with_lorem_ipsum=False)
 
 # Example 2: Generating a string of 20 random words
-random_words = Lorem.words(words_numbers=20)
+random_words = lorem_generator.words(words_numbers=20)
 
 # Example 3: Generating a shopping list with 3 items
-shopping_items = Lorem.shopping_list(items_count=3)
+shopping_items = lorem_generator.shopping_list(items_count=3)
+
+# Example 4: Generating a PDF with 3 pages and no cover page
+pdf_generator.generate_pdf(filename="sample.pdf", num_pages=3, cover_page_count=False)
 ```
 
 Feel free to customize the parameters based on your needs.
@@ -100,6 +127,10 @@ Feel free to customize the parameters based on your needs.
 ---
 
 ## 🛠 Technologies
+
+- Python
+- `reportlab` (for PDF generation)
+- `pyloremgen` (for Lorem Ipsum text generation)
 
 ---
 
@@ -111,7 +142,7 @@ Help the community make this project even more amazing. Read how to contribute b
 
 ## 📝 License
 
-This project is under the license [GLP3 - License](./LICENSE).
+This project is licensed under the [MIT License](./LICENSE).
 
 ---
 

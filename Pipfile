@@ -5,8 +5,6 @@ name = "pypi"
 
 [packages]
 reportlab = "==4.2.*"
-pyjwt = "2.8.*"
-pillow = "*"
 
 [dev-packages]
 black = "==24.4.*"

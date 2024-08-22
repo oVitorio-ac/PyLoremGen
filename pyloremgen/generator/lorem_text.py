@@ -1,8 +1,6 @@
-"""use de random library for create lorem ipsum"""
-
 import random
 
-from pylorem.utils.helper import get_data_json
+from pyloremgen.utilities.file_helper import get_data_json
 
 
 class LoremIpsumError(Exception):
@@ -78,7 +76,8 @@ class LoremIpsum:
         self.words_lorem = []
         self.items_lorem = []
         self.paragraphs_words = None
-        self.start_with_lorem_ipsum = " ".join(get_data_json('lorem_ipsum_start'))
+        self.start_with_lorem_ipsum = " ".join(get_data_json("lorem_ipsum_start"))
+        self.start_with_lorem_ipsum = " ".join(get_data_json("lorem_ipsum_start"))
         self.__initialize_paragraphs_words()
 
     def __initialize_paragraphs_words(self):
@@ -117,7 +116,10 @@ class LoremIpsum:
             raise LoremIpsumError(f"Error generating paragraph: {str(e)}") from e
 
     def paragraphs(
-        self, paragraphs_numbers: int, size: str = "medium", start_with_lorem_ipsum: bool = True
+        self,
+        paragraphs_numbers: int = 1,
+        size: str = "medium",
+        start_with_lorem_ipsum: bool = True,
     ) -> str:
         """
         Generate a specified number of lorem ipsum paragraphs with specified size.
@@ -125,6 +127,7 @@ class LoremIpsum:
         Parameters:
             paragraphs_numbers (int): The number of paragraphs to generate.
             size (str, optional): The size of the paragraphs. Can be "small", "medium", or "large". Defaults to "medium".
+            start_with_lorem_ipsum (bool, optional):
             start_with_lorem_ipsum (bool, optional):
             Whether to start with a "Lorem ipsum" paragraph. Defaults to False.
 
@@ -169,23 +172,30 @@ class LoremIpsum:
         except Exception as e:
             raise LoremIpsumError(f"Error generating words: {str(e)}") from e
 
-    def shopping_list(self, items_count: int) -> str:
+    def shopping_list(self, items_count: int = None) -> str:
         """
         Generates a shopping list of randomly selected items.
-
         Args:
             items_count (int): The number of items to include in the shopping list.
-
         Returns:
             str: The shopping list as a string, with each item on a new line.
-
         Raises:
             LoremIpsumError: If an error occurs during the generation of the shopping list.
         """
+        items_count = random.randint(5, 100) if items_count is None else items_count
         try:
-            items = random.sample(get_data_json(), k=items_count)
-            self.items_lorem.append("Shopping List:")
-            self.items_lorem.extend(items)
-            return "\n".join(self.items_lorem)
+            data_json = get_data_json()
+            if items_count > len(data_json):
+                # Repetir o data_json para alcançar o items_count
+                repeated_data = (
+                    data_json * (items_count // len(data_json))
+                    + data_json[: items_count % len(data_json)]
+                )
+                items = random.choices(repeated_data, k=items_count)
+            else:
+                items = random.choices(data_json, k=items_count)
+                self.items_lorem.append("Shopping List:")
+                self.items_lorem.extend(items)
+                return "\n".join(self.items_lorem)
         except Exception as e:
             raise LoremIpsumError(f"Error generating shopping list: {str(e)}") from e

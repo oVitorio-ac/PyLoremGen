@@ -1,6 +1,6 @@
 import unittest
 
-from pylorem.utils.helper import get_data_json
+from pyloremgen.utilities.file_helper import get_data_json
 
 
 class TestGetDataJson(unittest.TestCase):
