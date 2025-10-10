@@ -1,6 +1,6 @@
 import random
 
-from pyloremgen.utilities.file_helper import get_data_json
+from ..utilities.file_helper import get_data_json
 
 
 class LoremIpsumError(Exception):
@@ -17,7 +17,7 @@ class LoremIpsum:
     LoremIpsum class
 
     This class generates lorem ipsum text.
-    It provides methods for generating paragraphs, words, and a shopping list of random items.
+    It provides methods for generating paragraphs, words, and shopping lists.
 
     Methods:
         __init__():
@@ -63,8 +63,8 @@ class LoremIpsum:
         - `paragraph_lorem`: A list to store lorem ipsum paragraphs.
         - `words_lorem`: A list to store lorem ipsum words.
         - `items_lorem`: A list to store lorem ipsum items.
-        - `paragraphs_words`: A variable to store the number of words in each paragraph.
-        - `start_with_lorem_ipsum`: A string that represents the start of a lorem ipsum text.
+        - `paragraphs_words`: Number of words in each paragraph.
+        - `start_with_lorem_ipsum`: Start lorem ipsum string.
 
         Parameters:
         None
@@ -126,10 +126,10 @@ class LoremIpsum:
 
         Parameters:
             paragraphs_numbers (int): The number of paragraphs to generate.
-            size (str, optional): The size of the paragraphs. Can be "small", "medium", or "large". Defaults to "medium".
-            start_with_lorem_ipsum (bool, optional):
-            start_with_lorem_ipsum (bool, optional):
-            Whether to start with a "Lorem ipsum" paragraph. Defaults to False.
+            size (str, optional): Size of paragraphs
+            ("small", "medium", "large"). Default "medium".
+            start_with_lorem_ipsum (bool, optional): Start with
+            "Lorem ipsum" paragraph. Default True.
 
         Returns:
             str: The generated paragraphs joined by newline characters.
@@ -180,7 +180,7 @@ class LoremIpsum:
         Returns:
             str: The shopping list as a string, with each item on a new line.
         Raises:
-            LoremIpsumError: If an error occurs during the generation of the shopping list.
+            LoremIpsumError: If an error occurs.
         """
         items_count = random.randint(5, 100) if items_count is None else items_count
         try:
@@ -194,8 +194,8 @@ class LoremIpsum:
                 items = random.choices(repeated_data, k=items_count)
             else:
                 items = random.choices(data_json, k=items_count)
-                self.items_lorem.append("Shopping List:")
-                self.items_lorem.extend(items)
-                return "\n".join(self.items_lorem)
+            self.items_lorem.append("Shopping List:")
+            self.items_lorem.extend(items)
+            return "\n".join(self.items_lorem)
         except Exception as e:
             raise LoremIpsumError(f"Error generating shopping list: {str(e)}") from e

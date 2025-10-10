@@ -1,17 +1,47 @@
+from typing import Optional
+
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import PageBreak, Paragraph
 
-from pyloremgen.generator.lorem_text import LoremIpsum
-from pyloremgen.generator.pdf_utils.cover_page_template import CoverPageBuilder
-from pyloremgen.generator.pdf_utils.pdf_page_settings import PagesConfigPDF
+from .lorem_text import LoremIpsum
+from .pdf_utils.cover_page_template import CoverPageBuilder
+from .pdf_utils.pdf_page_settings import PagesConfigPDF
 
 
 class PDFGenerator:
-    def __init__(self, pages_config=None):
+    """
+    PDFGenerator class for creating PDF documents with Lorem Ipsum content.
+
+    This class provides functionality to generate
+    PDF files filled with Lorem Ipsum text,
+    with options for customizing page settings and including cover pages.
+
+    Attributes:
+        pages_config (PagesConfigPDF): Configuration for PDF page settings.
+        lorem (LoremIpsum): Instance of LoremIpsum for generating text content.
+
+    Methods:
+        generate_pdf(filename: str, num_pages: int = 1,
+        cover_page_count: bool = True) -> None:
+            Generates a PDF document with the specified number of pages.
+    """
+
+    def __init__(self, pages_config: Optional[PagesConfigPDF] = None) -> None:
         self.pages_config = pages_config or PagesConfigPDF()
         self.lorem = LoremIpsum()
 
-    def generate_pdf(self, filename, num_pages=1, cover_page_count=True):
+    def generate_pdf(
+        self, filename: str, num_pages: int = 1, cover_page_count: bool = True
+    ) -> None:
+        """
+        Generate a PDF document with Lorem Ipsum content.
+
+        Args:
+            filename (str): The name of the output PDF file.
+            num_pages (int, optional): The number of pages to generate. Defaults to 1.
+            cover_page_count (bool, optional):
+                Whether to include a cover page. Defaults to True.
+        """
         self.num_pages = num_pages
         doc = self.pages_config.create_document(filename)
         content = []
