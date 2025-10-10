@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Delete merged branch
-      run: gh branch delete ${{ github.head_ref }}
+      run: gh api -X DELETE repos/${{ github.repository }}/git/refs/heads/${{ github.head_ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
