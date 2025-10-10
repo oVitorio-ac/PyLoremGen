@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   delete-branch:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && !contains(fromJSON('["development", "main", "master"]'), github.head_ref)
     runs-on: ubuntu-latest
     steps:
     - name: Delete merged branch
